@@ -7,8 +7,8 @@ import me.angelique.angelTrade.models.TradeShop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-
 import java.io.File;
+import org.sqlite.SQLiteConfig;
 import java.sql.*;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -31,8 +31,10 @@ public class DataManager {
         try {
             plugin.getDataFolder().mkdirs();
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-            connection.createStatement().execute("PRAGMA journal_mode=WAL;");
+            SQLiteConfig config = new SQLiteConfig();
+            config.setJournalMode(SQLiteConfig.JournalMode.WAL);
+            config.setBusyTimeout(5000);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath, config.toProperties());
             createTables();
             return true;
         } catch (Exception e) {
@@ -43,8 +45,10 @@ public class DataManager {
 
     private Connection getConn() throws SQLException {
         if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-            connection.createStatement().execute("PRAGMA journal_mode=WAL;");
+            SQLiteConfig config = new SQLiteConfig();
+            config.setJournalMode(SQLiteConfig.JournalMode.WAL);
+            config.setBusyTimeout(5000);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath, config.toProperties());
         }
         return connection;
     }
