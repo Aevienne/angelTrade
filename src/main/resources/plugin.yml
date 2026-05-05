@@ -1,0 +1,31 @@
+name: angelTrade
+version: '1.0.0'
+main: me.angelique.angelTrade.AngelTrade
+api-version: '1.21'
+authors: [ angelique ]
+description: Trade Routes and Trade Shops plugin.
+depend: [ Vault ]
+
+commands:
+  route:
+    description: Trade Route commands
+    usage: /route <create|list|info|insure|remove>
+  tradeshop:
+    description: Trade Shop commands
+    usage: /tradeshop <place|relocate|additem|removeitem|setprice|info>
+
+permissions:
+  angeltrade.route.create:
+    default: true
+  angeltrade.route.list:
+    default: true
+  angeltrade.route.info:
+    default: true
+  angeltrade.route.insure:
+    default: true
+  angeltrade.route.remove:
+    default: true
+  angeltrade.tradeshop.use:
+    default: true
+  angeltrade.admin:
+    default: op

@@ -1,0 +1,57 @@
+# angelTrade Configuration
+max-route-distance: 1000
+
+# Days before decay stages
+decay:
+  warn-days: 7
+  inactive-days: 14
+  broken-days: 21
+
+# Grace period (days) to revive a broken route
+revival-grace-days: 3
+
+# Route tier thresholds (uses)
+tiers:
+  dirt-road-max: 20
+  stone-road-max: 60
+  gold-road-max: 150
+
+# Upkeep cost per tier per day (in $)
+upkeep:
+  dirt-road: 5.0
+  stone-road: 10.0
+  gold-road: 20.0
+  royal-road: 40.0
+
+# Insurance pool — fraction of upkeep stored
+insurance-pool-fraction: 0.25
+
+# Trade Shop relocation cooldown (seconds)
+tradeshop-relocate-cooldown: 300
+
+# Route bonus per tier (multiplier added to base 1.0)
+route-bonus:
+  dirt-road: 0.05
+  stone-road: 0.12
+  gold-road: 0.20
+  royal-road: 0.30
+
+# Passive income per sale when shop is on an active route (%)
+route-passive-income:
+  dirt-road: 0.02
+  stone-road: 0.05
+  gold-road: 0.10
+  royal-road: 0.15
+
+# Currency symbol displayed in GUIs
+currency-symbol: '$'
+
+messages:
+  prefix: '&8[&6angelTrade&8] &r'
+  route-created: '&aRoute created successfully!'
+  route-removed: '&cRoute removed.'
+  route-insured: '&aRoute insured!'
+  no-permission: '&cYou do not have permission.'
+  waystone-placed: '&aWaystone placed! Right-click another Waystone with a Route Deed to link.'
+  waystone-broken-owner: '&cYour waystone at %location% was destroyed by %player%!'
+  saboteur-tag: '&cSaboteur'
