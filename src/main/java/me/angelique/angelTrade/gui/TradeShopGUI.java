@@ -4,6 +4,14 @@ import me.angelique.angelTrade.AngelTrade;
 import me.angelique.angelTrade.models.ShopItem;
 import me.angelique.angelTrade.models.TradeRoute;
 import me.angelique.angelTrade.models.TradeShop;
+import me.angelique.angelNCore.events.EventBus;
+import me.angelique.angelNCore.events.TradeCompletedEvent;
+import me.angelique.angelNCore.services.MarketService;
+import me.angelique.angelNCore.services.ServiceRegistry;
+import me.angelique.angelNCore.events.EventBus;
+import me.angelique.angelNCore.events.TradeCompletedEvent;
+import me.angelique.angelNCore.services.MarketService;
+import me.angelique.angelNCore.services.ServiceRegistry;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,8 +53,11 @@ public class TradeShopGUI {
 
             List<String> lore = new ArrayList<>();
             lore.add("\u00A77Company Price: \u00A7a" + sym + String.format("%.2f", si.getEffectivePrice()));
-            // Stub: replace this line with actual server shop price lookup
-            lore.add("\u00A77Server Price:  \u00A7f" + sym + "?.?? \u00A78(angelEconomy — WIP)");
+            MarketService mkt = ServiceRegistry.getMarketService();
+            String serverPrice = mkt != null
+                    ? sym + String.format("%.2f", mkt.getPrice(si.getItemKey().toUpperCase()))
+                    : "§8N/A";
+            lore.add("§7Market Price:  §f" + serverPrice);
             lore.add("\u00A77Stock: \u00A7f" + si.getStock());
             if (si.getDiscount() > 0) lore.add("\u00A7cDiscount: \u00A7e" + (int)(si.getDiscount()*100) + "%");
 
@@ -120,6 +131,20 @@ public class TradeShopGUI {
         player.getInventory().addItem(new ItemStack(mat));
 
         plugin.getBonusManager().processSaleBonus(shop, price);
+
+        String itemType = si.getItemKey().toUpperCase();
+        EventBus.publish(new TradeCompletedEvent(
+                shop.getId(),
+                shop.getOwnerUUID().toString(),
+                player.getName(),
+                itemType,
+                1,
+                price
+        ));
+        MarketService market = ServiceRegistry.getMarketService();
+        if (market != null) {
+            market.recordTransaction(itemType, 1, price);
+        }
 
         String sym = plugin.getConfig().getString("currency-symbol", "$");
         player.sendMessage(color("&aPurchased &e" + formatName(si.getItemKey()) + " &afor &e" + sym + String.format("%.2f", price)));

@@ -5,6 +5,7 @@ api-version: '1.21'
 authors: [ angelique ]
 description: Trade Routes and Trade Shops plugin.
 depend: [ Vault ]
+softdepend: [ AngelNCore ]
 
 commands:
   route:
