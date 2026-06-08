@@ -4,10 +4,7 @@ import me.angelique.angelTrade.AngelTrade;
 import me.angelique.angelTrade.models.ShopItem;
 import me.angelique.angelTrade.models.TradeRoute;
 import me.angelique.angelTrade.models.TradeShop;
-import me.angelique.angelNCore.events.EventBus;
-import me.angelique.angelNCore.events.TradeCompletedEvent;
-import me.angelique.angelNCore.services.MarketService;
-import me.angelique.angelNCore.services.ServiceRegistry;
+import me.angelique.angelNCore.events.ContractBreachedEvent;
 import me.angelique.angelNCore.events.EventBus;
 import me.angelique.angelNCore.events.TradeCompletedEvent;
 import me.angelique.angelNCore.services.MarketService;
@@ -118,6 +115,7 @@ public class TradeShopGUI {
         double price = si.getEffectivePrice();
         if (!plugin.getEconomy().has(player, price)) {
             player.sendMessage(color("&cInsufficient funds."));
+            EventBus.publish(new ContractBreachedEvent(shop.getId(), player.getName(), shop.getCompanyId()));
             return;
         }
 

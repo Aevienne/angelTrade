@@ -2,6 +2,8 @@ package me.angelique.angelTrade.managers;
 
 import me.angelique.angelTrade.AngelTrade;
 import me.angelique.angelTrade.models.TradeRoute;
+import me.angelique.angelNCore.events.EventBus;
+import me.angelique.angelNCore.events.ShipmentInterceptedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -68,6 +70,7 @@ public class RouteManager {
         routes.remove(id);
         plugin.getDataManager().deleteRoute(id);
         player.sendMessage(color(plugin.getConfig().getString("messages.route-removed", "&cRoute removed.")));
+        EventBus.publish(new ShipmentInterceptedEvent(id, r.getOwnerUUID().toString(), "NONE", "ROUTE", 0));
         return true;
     }
 
