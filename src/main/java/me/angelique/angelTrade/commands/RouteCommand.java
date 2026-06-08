@@ -35,7 +35,8 @@ public class RouteCommand implements CommandExecutor {
                 player.sendMessage(color("&6--- Your Trade Routes ---"));
                 for (TradeRoute r : routes) {
                     player.sendMessage(color("&e" + r.getId() + " &7| " + r.getTier().name().replace("_"," ")
-                        + " | " + r.getStatus().name() + " | Uses: " + r.getUses()));
+                        + " | " + r.getStatus().name() + " | Risk: &" + riskColor(r) + r.getRiskLabel()
+                        + " &7| Uses: " + r.getUses()));
                 }
             }
             case "info" -> {
@@ -49,6 +50,7 @@ public class RouteCommand implements CommandExecutor {
                 player.sendMessage(color("&7Last Used: &e" + r.getLastUsed()));
                 player.sendMessage(color("&7Insured: &e" + r.isInsured()));
                 player.sendMessage(color("&7Insurance Pool: &e$" + String.format("%.2f", r.getInsurancePool())));
+                player.sendMessage(color("&7Risk: &" + riskColor(r) + r.getRiskLabel() + " &7(" + String.format("%.0f", r.getRiskRating()*100) + "%)"));
                 double bonus = plugin.getBonusManager().getRouteValueBonus(r.getTier()) * 100;
                 player.sendMessage(color("&7Value Bonus: &a+" + (int)bonus + "%"));
             }
@@ -75,4 +77,12 @@ public class RouteCommand implements CommandExecutor {
     }
 
     private String color(String s) { return s.replace('&', '\u00A7'); }
+
+    private String riskColor(TradeRoute r) {
+        double v = r.getRiskRating();
+        if (v < 0.25) return "a";
+        if (v < 0.50) return "e";
+        if (v < 0.75) return "6";
+        return "c";
+    }
 }

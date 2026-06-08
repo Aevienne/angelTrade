@@ -22,6 +22,8 @@ public class TradeRoute {
     private boolean insured;
     private double insurancePool;
     private Instant brokenAt;
+    private double riskRating = 0.5;
+    private int sabotageCount = 0;
 
     public TradeRoute(String id, UUID ownerUUID, Location locationA, Location locationB) {
         this.id = id;
@@ -54,6 +56,33 @@ public class TradeRoute {
         return (Instant.now().getEpochSecond() - lastUsed.getEpochSecond()) / 86400;
     }
 
+    public double calculateRisk() {
+        double base = 0.0;
+        if (locationA != null && locationB != null && locationA.getWorld() != null && locationB.getWorld() != null
+                && locationA.getWorld().equals(locationB.getWorld())) {
+            base = Math.min(1.0, locationA.distance(locationB) / 2000.0);
+        }
+        double tierMultiplier = switch (tier) {
+            case DIRT_ROAD -> 0.5;
+            case STONE_ROAD -> 0.7;
+            case GOLD_ROAD -> 0.85;
+            case ROYAL_ROAD -> 1.0;
+        };
+        double sabotagePenalty = Math.min(0.3, sabotageCount * 0.1);
+        double statusPenalty = status == Status.BROKEN ? 0.4 : status == Status.INACTIVE ? 0.15 : 0.0;
+        double insuranceBonus = insured ? -0.15 : 0.0;
+        this.riskRating = Math.max(0.0, Math.min(1.0, base * tierMultiplier + sabotagePenalty + statusPenalty + insuranceBonus));
+        return riskRating;
+    }
+
+    public String getRiskLabel() {
+        double r = getRiskRating();
+        if (r < 0.25) return "SAFE";
+        if (r < 0.50) return "LOW";
+        if (r < 0.75) return "MODERATE";
+        return "DANGEROUS";
+    }
+
     // ── getters / setters ────────────────────────────────────────────────────
     public String getId() { return id; }
     public UUID getOwnerUUID() { return ownerUUID; }
@@ -75,6 +104,10 @@ public class TradeRoute {
     public void setInsurancePool(double pool) { insurancePool = pool; }
     public Instant getBrokenAt() { return brokenAt; }
     public void setBrokenAt(Instant t) { brokenAt = t; }
+    public double getRiskRating() { return calculateRisk(); }
+    public void setRiskRating(double r) { this.riskRating = r; }
+    public int getSabotageCount() { return sabotageCount; }
+    public void addSabotage() { sabotageCount++; calculateRisk(); }
     public void setLocationA(Location l) { locationA = l; }
     public void setLocationB(Location l) { locationB = l; }
 }
