@@ -1,5 +1,6 @@
 package me.angelique.angelTrade;
 
+import me.angelique.angelTrade.commands.EscrowCommand;
 import me.angelique.angelTrade.commands.RouteCommand;
 import me.angelique.angelTrade.commands.TradeShopCommand;
 import me.angelique.angelTrade.data.DataManager;
@@ -54,6 +55,8 @@ public class AngelTrade extends JavaPlugin {
 
         getCommand("route").setExecutor(new RouteCommand(this));
         getCommand("tradeshop").setExecutor(new TradeShopCommand(this));
+        getCommand("escrow").setExecutor(new EscrowCommand(this));
+        getCommand("escrow").setTabCompleter(new EscrowCommand(this));
 
         me.angelique.angelTrade.managers.RecipeManager.register(this);
         startDecayTask();
