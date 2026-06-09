@@ -17,7 +17,7 @@ import java.util.*;
 
 public final class TradeShopBrowserGui {
 
-    static final String TITLE = "\u00A78Trade Shops \u00A77\u2014 \u00A7dBrowse";
+    static final String TITLE = "\u00A7dBrowse Shops";
     static final int SIZE = 54;
     static final int[] SHOP_SLOTS = {10,11,12,13,14,15,16, 19,20,21,22,23,24,25, 28,29,30,31,32,33,34};
 

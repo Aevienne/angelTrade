@@ -13,7 +13,7 @@ import java.util.*;
 
 public final class RouteGui {
 
-    public static final String TITLE = color("&8Trade Routes &7\u2014 &dCaravan Network");
+    public static final String TITLE = color("&dCaravan Network");
     static final int SIZE = 45;
 
     private RouteGui() {}
