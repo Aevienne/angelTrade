@@ -1,6 +1,7 @@
 package me.angelique.angelTrade.commands;
 
 import me.angelique.angelTrade.AngelTrade;
+import me.angelique.angelTrade.gui.RouteGui;
 import me.angelique.angelTrade.models.TradeRoute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +24,7 @@ public class RouteCommand implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
-        if (args.length == 0) { sendHelp(player); return true; }
+        if (args.length == 0) { RouteGui.open(player, plugin); return true; }
 
         switch (args[0].toLowerCase()) {
             case "create" -> {

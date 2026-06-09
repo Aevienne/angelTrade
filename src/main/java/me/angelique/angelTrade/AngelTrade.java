@@ -4,6 +4,8 @@ import me.angelique.angelTrade.commands.EscrowCommand;
 import me.angelique.angelTrade.commands.RouteCommand;
 import me.angelique.angelTrade.commands.TradeShopCommand;
 import me.angelique.angelTrade.data.DataManager;
+import me.angelique.angelTrade.gui.RouteGui;
+import me.angelique.angelTrade.gui.RouteGuiListener;
 import me.angelique.angelTrade.gui.TradeShopBrowserGui;
 import me.angelique.angelTrade.gui.TradeShopGuiListener;
 import me.angelique.angelTrade.listeners.TradeShopListener;
@@ -55,6 +57,7 @@ public class AngelTrade extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WaystoneListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeShopListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeShopGuiListener(this), this);
+        getServer().getPluginManager().registerEvents(new RouteGuiListener(), this);
 
         getCommand("route").setExecutor(new RouteCommand(this));
         getCommand("tradeshop").setExecutor(new TradeShopCommand(this));
