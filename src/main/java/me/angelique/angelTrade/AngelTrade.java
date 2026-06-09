@@ -57,7 +57,7 @@ public class AngelTrade extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WaystoneListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeShopListener(this), this);
         getServer().getPluginManager().registerEvents(new TradeShopGuiListener(this), this);
-        getServer().getPluginManager().registerEvents(new RouteGuiListener(), this);
+        getServer().getPluginManager().registerEvents(new RouteGuiListener(this), this);
 
         getCommand("route").setExecutor(new RouteCommand(this));
         getCommand("tradeshop").setExecutor(new TradeShopCommand(this));

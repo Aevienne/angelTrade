@@ -15,11 +15,13 @@ public final class RouteGui {
 
     public static final String TITLE = color("&dCaravan Network");
     static final int SIZE = 45;
+    static final Map<UUID, List<TradeRoute>> routeCache = new HashMap<>();
 
     private RouteGui() {}
 
     public static void open(Player player, AngelTrade plugin) {
         List<TradeRoute> routes = plugin.getRouteManager().getRoutesForPlayer(player.getUniqueId());
+        routeCache.put(player.getUniqueId(), routes);
         Inventory inv = Bukkit.createInventory(null, SIZE, TITLE);
         fillBorder(inv);
 
