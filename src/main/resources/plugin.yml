@@ -14,6 +14,9 @@ commands:
   tradeshop:
     description: Trade Shop commands
     usage: /tradeshop <place|relocate|additem|removeitem|setprice|info>
+  escrow:
+    description: Escrow trade commands
+    usage: /escrow <offer|accept|confirm|cancel|list> [args]
 
 permissions:
   angeltrade.route.create:
