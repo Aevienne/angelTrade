@@ -1,6 +1,7 @@
 package me.angelique.angelTrade.commands;
 
 import me.angelique.angelTrade.AngelTrade;
+import me.angelique.angelTrade.gui.TradeShopBrowserGui;
 import me.angelique.angelTrade.listeners.TradeShopListener;
 import me.angelique.angelTrade.models.ShopItem;
 import me.angelique.angelTrade.models.TradeShop;
@@ -27,7 +28,7 @@ public class TradeShopCommand implements CommandExecutor {
             player.sendMessage(color(plugin.getConfig().getString("messages.no-permission")));
             return true;
         }
-        if (args.length == 0) { sendHelp(player); return true; }
+        if (args.length == 0) { TradeShopBrowserGui.open(player, plugin, 0); return true; }
 
         switch (args[0].toLowerCase()) {
             case "place" -> {
